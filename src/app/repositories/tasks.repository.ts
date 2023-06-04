@@ -10,6 +10,10 @@ class TasksRepository {
   async create(task: ITask) {
     return await this.model.create(task);
   }
+
+  async getById(id: string) {
+    return await this.model.findById(id);
+  }
 }
 
 export default TasksRepository;
