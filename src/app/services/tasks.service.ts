@@ -63,6 +63,52 @@ class TasksService {
       };
     }
   }
+
+  async updateStatus(payload: Pick<ITask, "id" | "status">) {
+    try {
+      const schema = object().shape({
+        id: string().required(),
+        status: string().oneOf(["Pendente", "Fazendo", "Concluido"]),
+      });
+
+      try {
+        await schema.validate(payload);
+      } catch (error: any) {
+        return {
+          statusCode: 400,
+          message: error.errors,
+          data: null,
+        };
+      }
+
+      const task = await this.tasksRepository.getById(payload.id);
+
+      if (!task) {
+        return {
+          statusCode: 404,
+          message: "Task not found",
+          data: null,
+        };
+      }
+
+      const updatedTask = await this.tasksRepository.updateStatus(
+        payload.id,
+        payload.status
+      );
+
+      return {
+        statusCode: 200,
+        message: "Task updated successfully",
+        data: updatedTask,
+      };
+    } catch (error: any) {
+      return {
+        statusCode: 500,
+        message: error.message,
+        data: null,
+      };
+    }
+  }
 }
 
 export default TasksService;
