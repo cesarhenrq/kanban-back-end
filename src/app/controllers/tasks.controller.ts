@@ -19,6 +19,19 @@ class TasksController {
       data,
     });
   }
+
+  async updateStatus(request: Request, response: Response) {
+    const { body: payload } = request;
+
+    const { statusCode, message, data } = await this.service.updateStatus(
+      payload
+    );
+
+    return response.status(statusCode).json({
+      message,
+      data,
+    });
+  }
 }
 
 export default TasksController;
