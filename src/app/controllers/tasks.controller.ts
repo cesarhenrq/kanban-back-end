@@ -48,6 +48,24 @@ class TasksController {
       data,
     });
   }
+
+  async getTasksByUser(request: Request, response: Response) {
+    const {
+      params: { userId },
+    } = request;
+
+    const { query } = request;
+
+    const { statusCode, message, data } = await this.service.getTasksByUser(
+      userId,
+      query
+    );
+
+    return response.status(statusCode).json({
+      message,
+      data,
+    });
+  }
 }
 
 export default TasksController;
