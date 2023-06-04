@@ -14,6 +14,10 @@ class TasksRepository {
   async getById(id: string) {
     return await this.model.findById(id);
   }
+
+  async updateStatus(id: string, status: string) {
+    return await this.model.findByIdAndUpdate(id, { status }, { new: true });
+  }
 }
 
 export default TasksRepository;
