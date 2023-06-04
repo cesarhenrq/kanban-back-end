@@ -8,4 +8,6 @@ const taskModule = TaskModule.build();
 
 taskRouter.post("/", taskModule.create.bind(taskModule));
 
+taskRouter.put("/", taskModule.updateStatus.bind(taskModule));
+
 export default taskRouter;
