@@ -184,6 +184,28 @@ class TasksService {
       };
     }
   }
+
+  async getAll(query: any) {
+    try {
+      const { startIndex, endIndex } = paginate(query);
+
+      const tasks = await this.tasksRepository.getAll();
+
+      const paginatedTasks = tasks.slice(startIndex, endIndex);
+
+      return {
+        statusCode: 200,
+        message: "Tasks found successfully",
+        data: paginatedTasks,
+      };
+    } catch (error: any) {
+      return {
+        statusCode: 500,
+        message: error.message,
+        data: null,
+      };
+    }
+  }
 }
 
 export default TasksService;
