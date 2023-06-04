@@ -12,7 +12,7 @@ class UsersRepository {
   }
 
   async getById(id: string) {
-    return await this.model.findById(id);
+    return await this.model.findById(id).populate("tasks");
   }
 
   async associateTask(userId: string, taskId: string) {
