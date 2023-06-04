@@ -24,6 +24,16 @@ class UsersRepository {
       { new: true }
     );
   }
+
+  async dissociateTask(userId: string, taskId: string) {
+    return await this.model.findByIdAndUpdate(
+      userId,
+      {
+        $pull: { tasks: taskId },
+      },
+      { new: true }
+    );
+  }
 }
 
 export default UsersRepository;
