@@ -10,6 +10,10 @@ class UsersRepository {
   async create(user: IUser) {
     return await this.model.create(user);
   }
+
+  async getById(id: string) {
+    return await this.model.findById(id);
+  }
 }
 
 export default UsersRepository;
