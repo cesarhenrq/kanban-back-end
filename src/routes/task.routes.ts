@@ -14,4 +14,6 @@ taskRouter.put("/:taskId/:userId", taskModule.updateUser.bind(taskModule));
 
 taskRouter.get("/:userId", taskModule.getTasksByUser.bind(taskModule));
 
+taskRouter.get("/", taskModule.getAll.bind(taskModule));
+
 export default taskRouter;
