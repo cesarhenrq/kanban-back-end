@@ -10,4 +10,6 @@ taskRouter.post("/", taskModule.create.bind(taskModule));
 
 taskRouter.put("/", taskModule.updateStatus.bind(taskModule));
 
+taskRouter.put("/:taskId/:userId", taskModule.updateUser.bind(taskModule));
+
 export default taskRouter;
