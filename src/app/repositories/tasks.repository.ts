@@ -22,6 +22,10 @@ class TasksRepository {
   async updateUser(id: string, user: string) {
     return await this.model.findByIdAndUpdate(id, { user }, { new: true });
   }
+
+  async getAll() {
+    return await this.model.find().populate("user");
+  }
 }
 
 export default TasksRepository;

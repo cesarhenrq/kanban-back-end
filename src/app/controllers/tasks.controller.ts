@@ -66,6 +66,17 @@ class TasksController {
       data,
     });
   }
+
+  async getAll(request: Request, response: Response) {
+    const { query } = request;
+
+    const { statusCode, message, data } = await this.service.getAll(query);
+
+    return response.status(statusCode).json({
+      message,
+      data,
+    });
+  }
 }
 
 export default TasksController;
