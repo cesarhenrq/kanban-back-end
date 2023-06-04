@@ -32,6 +32,22 @@ class TasksController {
       data,
     });
   }
+
+  async updateUser(request: Request, response: Response) {
+    const {
+      params: { userId, taskId },
+    } = request;
+
+    const { statusCode, message, data } = await this.service.updateUser(
+      userId,
+      taskId
+    );
+
+    return response.status(statusCode).json({
+      message,
+      data,
+    });
+  }
 }
 
 export default TasksController;

@@ -109,6 +109,48 @@ class TasksService {
       };
     }
   }
+
+  async updateUser(userId: string, taskId: string) {
+    try {
+      const user = await this.usersRepository.getById(userId);
+
+      if (!user) {
+        return {
+          statusCode: 404,
+          message: "User not found",
+          data: null,
+        };
+      }
+
+      const task = await this.tasksRepository.getById(taskId);
+
+      if (!task) {
+        return {
+          statusCode: 404,
+          message: "Task not found",
+          data: null,
+        };
+      }
+
+      await this.usersRepository.dissociateTask(task.user, taskId);
+
+      const updatedTask = await this.tasksRepository.updateUser(taskId, userId);
+
+      await this.usersRepository.associateTask(userId, taskId);
+
+      return {
+        statusCode: 200,
+        message: "Task updated successfully",
+        data: updatedTask,
+      };
+    } catch (error: any) {
+      return {
+        statusCode: 500,
+        message: error.message,
+        data: null,
+      };
+    }
+  }
 }
 
 export default TasksService;
