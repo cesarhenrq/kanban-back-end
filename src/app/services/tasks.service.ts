@@ -4,6 +4,7 @@ import UsersRepository from "../repositories/users.repository";
 import TasksRepository from "../repositories/tasks.repository";
 
 import { ITask } from "../entities/task.model";
+import paginate from "../../utils/functions/paginate";
 
 class TasksService {
   private usersRepository: UsersRepository;
@@ -142,6 +143,38 @@ class TasksService {
         statusCode: 200,
         message: "Task updated successfully",
         data: updatedTask,
+      };
+    } catch (error: any) {
+      return {
+        statusCode: 500,
+        message: error.message,
+        data: null,
+      };
+    }
+  }
+
+  async getTasksByUser(userId: string, query: any) {
+    try {
+      const user = (await this.usersRepository.getById(
+        userId
+      )) as unknown as any;
+
+      if (!user) {
+        return {
+          statusCode: 404,
+          message: "User not found",
+          data: null,
+        };
+      }
+
+      const { startIndex, endIndex } = paginate(query);
+
+      const tasks = user.tasks.slice(startIndex, endIndex);
+
+      return {
+        statusCode: 200,
+        message: "Tasks found successfully",
+        data: tasks,
       };
     } catch (error: any) {
       return {
