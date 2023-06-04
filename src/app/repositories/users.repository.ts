@@ -14,6 +14,16 @@ class UsersRepository {
   async getById(id: string) {
     return await this.model.findById(id);
   }
+
+  async associateTask(userId: string, taskId: string) {
+    return await this.model.findByIdAndUpdate(
+      userId,
+      {
+        $push: { tasks: taskId },
+      },
+      { new: true }
+    );
+  }
 }
 
 export default UsersRepository;
